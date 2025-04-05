@@ -1,0 +1,85 @@
+﻿@model redbus.User
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<style>
+    body {
+        background: linear-gradient(to bottom right, #cfe9f1, #e7d4f0);
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-container {
+        max-width: 450px;
+        margin: 60px auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #006d77;
+        font-weight: 600;
+    }
+
+    .form-group label {
+        font-weight: 500;
+    }
+
+    .form-control {
+        border-radius: 8px;
+    }
+
+    .btn-login {
+        background-color: #006d77;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-login:hover {
+        background-color: #055f68;
+    }
+
+    .error-message {
+        color: red;
+        margin-top: 15px;
+        text-align: center;
+    }
+
+ fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="login-container">
+    <h2>User Login</h2>
+
+    <form action="/Home/Login" method="post">
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            <input type="email" class="form-control" id="Email" name="Email" required maxlength="100" />
+        </div>
+
+        <div class="form-group">
+            <label for="Password">Password:</label>
+            <input type="password" class="form-control" id="Password" name="Password" required maxlength="100" />
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-login btn-lg text-white w-100">Login</button>
+        </div>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="error-message">@ViewBag.Message</div>
+        }
+    </form>
+</div>

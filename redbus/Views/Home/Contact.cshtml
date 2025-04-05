@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+
+<style>
+    .contact-section {
+        background: linear-gradient(to right, #e0f7fa, #f1fcf9);
+        padding: 60px 30px;
+        border-radius: 15px;
+        margin: 40px auto;
+        max-width: 900px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+        color: #023047;
+    }
+
+        .contact-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #006d77;
+        }
+
+    .contact-info {
+        font-size: 1.1rem;
+        line-height: 2;
+        margin-bottom: 40px;
+    }
+
+        .contact-info i {
+            color: #006d77;
+            margin-right: 10px;
+        }
+
+    .social-icons {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .social-icons a {
+            margin: 0 10px;
+            font-size: 1.5rem;
+            color: #006d77;
+            text-decoration: none;
+        }
+
+            .social-icons a:hover {
+                color: #023047;
+            }
+
+    .contact-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .contact-form label {
+        font-weight: 500;
+        color: #005f73;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .btn-contact {
+        background-color: #006d77;
+        color: white;
+        border: none;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        padding: 10px 25px;
+    }
+
+        .btn-contact:hover {
+            background-color: #055f68;
+        }
+</style>
+
+<div class="contact-section">
+    <h2>Contact Us</h2>
+
+    <div class="contact-info">
+        <p><i class="fas fa-map-marker-alt"></i> 123 Travel Lane, City Center, YourTown, Country</p>
+        <p><i class="fas fa-envelope"></i> support@busbooking.com</p>
+        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+        <p><i class="fas fa-clock"></i> Available: Monday – Saturday, 9:00 AM to 7:00 PM</p>
+    </div>
+
+    <form class="contact-form" method="post">
+        <div class="form-group">
+            <label for="Name">Full Name:</label>
+            <input type="text" class="form-control" id="Name" name="Name" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            <input type="email" class="form-control" id="Email" name="Email" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Phone">Phone Number:</label>
+            <input type="tel" class="form-control" id="Phone" name="Phone" pattern="[0-9]{10}" title="Enter 10-digit phone number" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Query">Your Query:</label>
+            <textarea class="form-control" id="Query" name="Query" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="ContactMethod">Preferred Contact Method:</label>
+            <select class="form-control" id="ContactMethod" name="ContactMethod" required>
+                <option value="">-- Select --</option>
+                <option value="Email">Email</option>
+                <option value="Phone">Phone</option>
+                <option value="WhatsApp">WhatsApp</option>
+            </select>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-contact">Submit</button>
+        </div>
+    </form>
+
+    <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+</div>

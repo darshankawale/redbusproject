@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="427350a69da547059bd30e6ef86007e1" Name="Diagram1">
+        <EntityTypeShape EntityType="RedbusModel1.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RedbusModel1.Bus" Width="1.5" PointX="5.625" PointY="0.875" />
+        <EntityTypeShape EntityType="RedbusModel1.Route" Width="1.5" PointX="3.375" PointY="1.125" />
+        <EntityTypeShape EntityType="RedbusModel1.Seat" Width="1.5" PointX="7.875" PointY="1" />
+        <AssociationConnector Association="RedbusModel1.FK__Buses__RouteId__3D5E1FD2" />
+        <AssociationConnector Association="RedbusModel1.FK__Seats__BusId__403A8C7D" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
