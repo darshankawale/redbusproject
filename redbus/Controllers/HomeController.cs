@@ -72,7 +72,7 @@ namespace redbus.Controllers
             return View(f);
         }
 
-        public ActionResult busbookig()
+        public ActionResult busbook()
         {
             // add a cooment
             return View();
