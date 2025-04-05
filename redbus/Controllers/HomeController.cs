@@ -48,10 +48,10 @@ namespace redbus.Controllers
           var a=   ent.Users.FirstOrDefault(m => m.Email.Equals(ue.Email) && m.Password.Equals(ue.Password));
             if (a != null) {
 
-                Session["userid"] = ue.UserId;
+                Session["userid"] = a.UserId;
 
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Userdash");
             
             }
             return View();
@@ -61,12 +61,18 @@ namespace redbus.Controllers
         
         public ActionResult Userdash()
         {
+            if (Session["userid"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            int  UserId =(int)Session["userid"];
 
+           var f=  ent.Users.Find(UserId);
 
-            return View();
+            return View(f);
         }
 
-        public ActionResult busbooki()
+        public ActionResult busbookig()
         {
             // add a cooment
             return View();
