@@ -66,8 +66,9 @@ namespace redbus.Controllers
             return View();
         }
 
-        public ActionResult busbook()
+        public ActionResult busbooki()
         {
+            // add a cooment
             return View();
         }
         public ActionResult About()
