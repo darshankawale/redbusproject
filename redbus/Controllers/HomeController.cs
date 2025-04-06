@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -129,6 +130,8 @@ namespace redbus.Controllers
             string seatnumbers = Request.Params["SelectedSeats"];
 
             string[] seatnum = seatnumbers.Split(',');
+            Session["busid"] = busid;
+            Session["seatnum"] = seatnumbers;
             foreach (string s in seatnum) {
             
                int seatno= int.Parse(s);
@@ -145,12 +148,7 @@ namespace redbus.Controllers
                 };
 
                 ent.Seats.Add(st);  
-                
-
-
-                
-             
-            
+                 
             
             }
             ent.SaveChanges();
@@ -159,7 +157,62 @@ namespace redbus.Controllers
         }
 
 
-        
+        public ActionResult Boardandpickup()
+
+        {
+           
+
+            return View();
+        }
+
+        public ActionResult bookinginfo()
+        {
+            string board = Request.Params["board"];
+            string pickup = Request.Params["pickup"];
+
+            Session["board"] = board;
+            Session["pickup"] = pickup;
+            Session["fare"] = 500;
+
+            var selectedSeats = (Session["seatnum"]?.ToString() ?? "").Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+
+            List<ConfirmBooking> bookings = new List<ConfirmBooking>();
+            foreach (var seat in selectedSeats)
+            {
+                bookings.Add(new ConfirmBooking
+                {
+                    SeatNumber = Convert.ToInt32(seat)
+                });
+            }
+
+            return View(bookings); 
+        }
+
+        public ActionResult savemultiplebooking(List<ConfirmBooking> Bookings)
+        {
+            foreach (var booking in Bookings)
+            {
+                booking.BookingTime = DateTime.Now;
+
+      
+                ent.ConfirmBookings.Add(booking);
+            }
+
+            ent.SaveChanges();
+            return RedirectToAction("message");
+        }
+
+        public ActionResult message()
+        {
+            return View();
+        }
+        public ActionResult printticket()
+        {
+            var email = Request.Params["email"];
+            var f = ent.ConfirmBookings.FirstOrDefault(b => b.Email == email);
+
+            return View(f);
+        }
         public ActionResult About()
         {
             return View();

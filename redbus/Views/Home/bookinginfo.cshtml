@@ -1,0 +1,64 @@
+﻿@model List<redbus.ConfirmBooking>
+
+@{
+    Layout = null;
+
+    int busId = Convert.ToInt32(Session["busid"]);
+    decimal fare = Convert.ToDecimal(Session["fare"]);
+    string pickup = Session["pickup"]?.ToString();
+    string board = Session["board"]?.ToString();
+    var selectedSeats = (Session["seatnum"]?.ToString() ?? "").Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Confirm Booking</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center text-primary mb-4">Confirm Booking Details</h2>
+
+        <form method="post" action="/Home/savemultiplebooking">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        Passenger for Seat No. @Model[i].SeatNumber
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" name="Bookings[@i].SeatNumber" value="@Model[i].SeatNumber" />
+                        <input type="hidden" name="Bookings[@i].BusId" value="@busId" />
+                        <input type="hidden" name="Bookings[@i].Fare" value="@fare" />
+                        <input type="hidden" name="Bookings[@i].boardingpoint" value="@board" />
+                        <input type="hidden" name="Bookings[@i].pickuppoint" value="@pickup" />
+
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="Bookings[@i].Name" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="Bookings[@i].Email" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile</label>
+                            <input type="text" name="Bookings[@i].Mobile" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" name="Bookings[@i].Age" class="form-control" required />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-lg">Proceed to Payment</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -29,5 +29,6 @@ namespace redbus
         public virtual DbSet<Bus> Buses { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<Seat> Seats { get; set; }
+        public virtual DbSet<ConfirmBooking> ConfirmBookings { get; set; }
     }
 }

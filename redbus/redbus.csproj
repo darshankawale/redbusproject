@@ -116,6 +116,9 @@
     <Compile Include="Bus.cs">
       <DependentUpon>Model12.tt</DependentUpon>
     </Compile>
+    <Compile Include="ConfirmBooking.cs">
+      <DependentUpon>Model12.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -178,6 +181,10 @@
     <Content Include="Views\Home\Userdash.cshtml" />
     <Content Include="Views\Home\busbook.cshtml" />
     <Content Include="Views\Home\SelectSeat.cshtml" />
+    <Content Include="Views\Home\Boardandpickup.cshtml" />
+    <Content Include="Views\Home\bookinginfo.cshtml" />
+    <Content Include="Views\Home\message.cshtml" />
+    <Content Include="Views\Home\printticket.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
