@@ -1,21 +1,92 @@
-﻿@model redbus.User
-
+﻿    @model redbus.Route
 @{
     Layout = null;
+    ViewBag.Title = "User Dashboard";
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Userdash</title>
+    <meta charset="utf-8" />
+    <title>User Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(to right, #dbeafe, #e0f7fa);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .dashboard-container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #006d77;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group label {
+            font-weight: 600;
+        }
+
+        .btn-search {
+            background-color: #006d77;
+            color: white;
+        }
+
+            .btn-search:hover {
+                background-color: #045d66;
+            }
+    </style>
 </head>
 <body>
-    <div> 
-        <h1>welcome to dash @Model.Name
-            
-        </h1>
+
+    <div class="dashboard-container">
+        <h2>Welcome, @ViewData["name"]</h2>
+
+        <form method="post" action="/Home/SearchRedirect">
+            <div class="form-group">
+                <label for="Mode">Select Mode:</label>
+                <select class="form-control" name="Mode" required>
+                    <option value="">-- Select Mode --</option>
+                    <option value="Bus">Bus</option>
+                    <option value="Train">Train</option>
+                    <option value="Flight">Flight</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="From">From:</label>
+                <input type="text" name="FromLocation" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="To">To:</label>
+                <input type="text" name="ToLocation" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Date">Date of Travel:</label>
+                <input type="TravelDate" name="Date" class="form-control" required />
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-search btn-lg">Search</button>
+            </div>
+        </form>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

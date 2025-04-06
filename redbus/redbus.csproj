@@ -176,6 +176,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Userdash.cshtml" />
+    <Content Include="Views\Home\busbook.cshtml" />
+    <Content Include="Views\Home\SelectSeat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

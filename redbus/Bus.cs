@@ -24,6 +24,9 @@ namespace redbus
         public string BusName { get; set; }
         public Nullable<int> RouteId { get; set; }
         public Nullable<int> TotalSeats { get; set; }
+        public Nullable<System.DateTime> DepartureTime { get; set; }
+        public Nullable<System.DateTime> ArrivalTime { get; set; }
+        public string BusType { get; set; }
     
         public virtual Route Route { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -13,6 +13,9 @@
           <Property Name="BusName" Type="nvarchar" MaxLength="100" />
           <Property Name="RouteId" Type="int" />
           <Property Name="TotalSeats" Type="int" />
+          <Property Name="DepartureTime" Type="datetime" />
+          <Property Name="ArrivalTime" Type="datetime" />
+          <Property Name="BusType" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Routes">
           <Key>
@@ -21,6 +24,8 @@
           <Property Name="RouteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FromLocation" Type="nvarchar" MaxLength="100" />
           <Property Name="ToLocation" Type="nvarchar" MaxLength="100" />
+          <Property Name="Mode" Type="nvarchar" MaxLength="50" />
+          <Property Name="TravelDate" Type="date" />
         </EntityType>
         <EntityType Name="Seats">
           <Key>
@@ -119,6 +124,9 @@
           <Property Name="TotalSeats" Type="Int32" />
           <NavigationProperty Name="Route" Relationship="RedbusModel1.FK__Buses__RouteId__3D5E1FD2" FromRole="Bus" ToRole="Route" />
           <NavigationProperty Name="Seats" Relationship="RedbusModel1.FK__Seats__BusId__403A8C7D" FromRole="Bus" ToRole="Seat" />
+          <Property Name="DepartureTime" Type="DateTime" Precision="3" />
+          <Property Name="ArrivalTime" Type="DateTime" Precision="3" />
+          <Property Name="BusType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -128,6 +136,8 @@
           <Property Name="FromLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ToLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Buses" Relationship="RedbusModel1.FK__Buses__RouteId__3D5E1FD2" FromRole="Route" ToRole="Bus" />
+          <Property Name="Mode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TravelDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Seat">
           <Key>
@@ -184,6 +194,9 @@
           <EntitySetMapping Name="Buses">
             <EntityTypeMapping TypeName="RedbusModel1.Bus">
               <MappingFragment StoreEntitySet="Buses">
+                <ScalarProperty Name="BusType" ColumnName="BusType" />
+                <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
                 <ScalarProperty Name="TotalSeats" ColumnName="TotalSeats" />
                 <ScalarProperty Name="RouteId" ColumnName="RouteId" />
                 <ScalarProperty Name="BusName" ColumnName="BusName" />
@@ -194,6 +207,8 @@
           <EntitySetMapping Name="Routes">
             <EntityTypeMapping TypeName="RedbusModel1.Route">
               <MappingFragment StoreEntitySet="Routes">
+                <ScalarProperty Name="TravelDate" ColumnName="TravelDate" />
+                <ScalarProperty Name="Mode" ColumnName="Mode" />
                 <ScalarProperty Name="ToLocation" ColumnName="ToLocation" />
                 <ScalarProperty Name="FromLocation" ColumnName="FromLocation" />
                 <ScalarProperty Name="RouteId" ColumnName="RouteId" />

@@ -68,15 +68,98 @@ namespace redbus.Controllers
             int  UserId =(int)Session["userid"];
 
            var f=  ent.Users.Find(UserId);
-
-            return View(f);
-        }
-
-        public ActionResult busbook()
-        {
-            // add a cooment
+            ViewData["name"] = f.Name;
             return View();
         }
+
+
+        public ActionResult SearchRedirect(Route rr)
+        {
+           var f=  ent.Routes.Where(b=>b.FromLocation.Equals(rr.FromLocation) && b.ToLocation.Equals(rr.ToLocation));
+            Session["from"] = rr.FromLocation;
+            Session["to"] = rr.ToLocation;
+            if (rr.Mode.ToLower() == "bus")
+            {
+                return RedirectToAction("busbook");
+            }
+            else if(rr.Mode.ToLower() == "train")
+            {
+                return RedirectToAction("trainbook");
+
+            }
+            else if (rr.Mode.ToLower() == "flight")
+            {
+                return RedirectToAction("flightbook");
+            }
+            else
+            {
+                return Redirect("Userdash");
+            }
+
+        }
+        public ActionResult busbook()
+        {
+            string from = Session["from"].ToString();
+            string to = Session["to"].ToString();
+
+            var buses = ent.Buses
+                           .Include("Route") 
+                           .Where(b => b.Route.FromLocation == from && b.Route.ToLocation == to)
+                           .ToList();
+
+            return View(buses);
+
+        }
+
+        public ActionResult SelectSeat(int BusId)
+        {
+            var seats = ent.Seats
+        .Where(b => b.BusId == BusId && b.IsBooked == true)
+        .Select(b => b.SeatNumber.ToString())
+        .ToList();
+            var bus = ent.Buses.Include("Route").FirstOrDefault(b=>b.BusId == BusId);
+            Session["Booked"] = string.Join(",", seats);
+
+            return View(bus);
+        }
+
+        public ActionResult ConfirmBooking()
+        {
+            int busid = int.Parse(Request.Params["BusId"]);
+            string seatnumbers = Request.Params["SelectedSeats"];
+
+            string[] seatnum = seatnumbers.Split(',');
+            foreach (string s in seatnum) {
+            
+               int seatno= int.Parse(s);
+
+                Seat st = new Seat()
+                {
+
+                    BusId = busid,
+                    SeatNumber = seatno.ToString(),
+                    IsBooked = true
+
+
+
+                };
+
+                ent.Seats.Add(st);  
+                
+
+
+                
+             
+            
+            
+            }
+            ent.SaveChanges();
+
+            return RedirectToAction("Boardandpickup");
+        }
+
+
+        
         public ActionResult About()
         {
             return View();

@@ -1,0 +1,158 @@
+﻿@model redbus.Bus
+@{
+    Layout = null;
+    var bookedSeatsRaw = Session["Booked"]?.ToString() ?? "";
+    var bookedSeats = bookedSeatsRaw.Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Select Seat - @Model.BusName</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #e0f7fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .bus-info {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .seat-container {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            gap: 12px;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .seat {
+            width: 60px;
+            height: 60px;
+            background-color: #dbeafe;
+            text-align: center;
+            line-height: 60px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            border: 2px solid #006d77;
+        }
+
+            .seat.selected {
+                background-color: #48cae4;
+                color: white;
+            }
+
+            .seat.booked {
+                background-color: #ff6b6b;
+                color: white;
+                font-weight: bold;
+                cursor: not-allowed;
+            }
+
+            .seat.aisle {
+                background: transparent;
+                border: none;
+                cursor: default;
+            }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+            .legend div {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .legend .box {
+                width: 20px;
+                height: 20px;
+                border-radius: 4px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="bus-info">
+            <h3 class="text-primary">@Model.BusName (@Model.BusType)</h3>
+            <p><strong>Route:</strong> @Session["from"] to @Session["to"]</p>
+            <p><strong>Departure:</strong> @Model.DepartureTime</p>
+            <p><strong>Total Seats:</strong> @Model.TotalSeats</p>
+        </div>
+
+        <form method="post" action="/Home/ConfirmBooking">
+            <input type="hidden" name="BusId" value="@Model.BusId" />
+            <input type="hidden" name="SelectedSeats" id="SelectedSeats" />
+
+            <h5 class="text-center text-success mb-4">Select Your Seats</h5>
+            <div class="seat-container" id="seatLayout">
+                @{
+                    int totalSeats = Model.TotalSeats ?? 40;
+                    for (int i = 1; i <= totalSeats; i++)
+                    {
+                        int colInRow = (i - 1) % 4;
+
+                        if (colInRow == 2) // aisle space
+                        {
+                            <div class="seat aisle"></div>
+                        }
+
+                        string seatClass = "seat";
+                        if (bookedSeats.Contains(i.ToString()))
+                        {
+                            seatClass += " booked";
+                        }
+
+                        <div class="@seatClass" data-seat="@i">@i</div>
+                    }
+                }
+            </div>
+
+            <div class="legend">
+                <div><div class="box" style="background:#dbeafe;"></div> Available</div>
+                <div><div class="box" style="background:#48cae4;"></div> Selected</div>
+                <div><div class="box" style="background:#ff6b6b;"></div> Booked</div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">Book Selected Seats</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const seatElements = document.querySelectorAll(".seat:not(.aisle):not(.booked)");
+            const selectedSeatsInput = document.getElementById("SelectedSeats");
+            let selectedSeats = [];
+
+            seatElements.forEach(seat => {
+                seat.addEventListener("click", () => {
+                    const seatNumber = seat.getAttribute("data-seat");
+                    seat.classList.toggle("selected");
+
+                    if (selectedSeats.includes(seatNumber)) {
+                        selectedSeats = selectedSeats.filter(s => s !== seatNumber);
+                    } else {
+                        selectedSeats.push(seatNumber);
+                    }
+
+                    selectedSeatsInput.value = selectedSeats.join(",");
+                });
+            });
+        });
+    </script>
+</body>
+</html>
