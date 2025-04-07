@@ -116,6 +116,9 @@
     <Compile Include="Bus.cs">
       <DependentUpon>Model12.tt</DependentUpon>
     </Compile>
+    <Compile Include="CancelBooking.cs">
+      <DependentUpon>Model12.tt</DependentUpon>
+    </Compile>
     <Compile Include="ConfirmBooking.cs">
       <DependentUpon>Model12.tt</DependentUpon>
     </Compile>
@@ -185,6 +188,7 @@
     <Content Include="Views\Home\bookinginfo.cshtml" />
     <Content Include="Views\Home\message.cshtml" />
     <Content Include="Views\Home\printticket.cshtml" />
+    <Content Include="Views\Home\cancel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

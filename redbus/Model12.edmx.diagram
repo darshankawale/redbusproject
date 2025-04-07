@@ -12,6 +12,7 @@
         <AssociationConnector Association="RedbusModel1.FK__Buses__RouteId__3D5E1FD2" />
         <AssociationConnector Association="RedbusModel1.FK__Seats__BusId__403A8C7D" />
         <EntityTypeShape EntityType="RedbusModel1.ConfirmBooking" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="RedbusModel1.CancelBooking" Width="1.5" PointX="3.25" PointY="4" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

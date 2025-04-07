@@ -17,6 +17,20 @@
           <Property Name="ArrivalTime" Type="datetime" />
           <Property Name="BusType" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="CancelBooking">
+          <Key>
+            <PropertyRef Name="cancelId" />
+          </Key>
+          <Property Name="cancelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BusId" Type="int" Nullable="false" />
+          <Property Name="SeatNumber" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="cutFare" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="cancelTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="ConfirmBooking">
           <Key>
             <PropertyRef Name="BookingId" />
@@ -89,6 +103,7 @@
         </Association>
         <EntityContainer Name="RedbusModel1StoreContainer">
           <EntitySet Name="Buses" EntityType="Self.Buses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CancelBooking" EntityType="Self.CancelBooking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConfirmBooking" EntityType="Self.ConfirmBooking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Routes" EntityType="Self.Routes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seats" EntityType="Self.Seats" Schema="dbo" store:Type="Tables" />
@@ -131,6 +146,7 @@
             <End Role="Seat" EntitySet="Seats" />
           </AssociationSet>
           <EntitySet Name="ConfirmBookings" EntityType="RedbusModel1.ConfirmBooking" />
+          <EntitySet Name="CancelBookings" EntityType="RedbusModel1.CancelBooking" />
         </EntityContainer>
         <EntityType Name="Bus">
           <Key>
@@ -207,6 +223,20 @@
           <Property Name="boardingpoint" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="pickuppoint" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="CancelBooking">
+          <Key>
+            <PropertyRef Name="cancelId" />
+          </Key>
+          <Property Name="cancelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BusId" Type="Int32" Nullable="false" />
+          <Property Name="SeatNumber" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="cutFare" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="cancelTime" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -273,6 +303,21 @@
                 <ScalarProperty Name="SeatNumber" ColumnName="SeatNumber" />
                 <ScalarProperty Name="BusId" ColumnName="BusId" />
                 <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CancelBookings">
+            <EntityTypeMapping TypeName="RedbusModel1.CancelBooking">
+              <MappingFragment StoreEntitySet="CancelBooking">
+                <ScalarProperty Name="cancelTime" ColumnName="cancelTime" />
+                <ScalarProperty Name="cutFare" ColumnName="cutFare" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SeatNumber" ColumnName="SeatNumber" />
+                <ScalarProperty Name="BusId" ColumnName="BusId" />
+                <ScalarProperty Name="cancelId" ColumnName="cancelId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.Diagnostics.Contracts;
+using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -212,6 +214,47 @@ namespace redbus.Controllers
             var f = ent.ConfirmBookings.FirstOrDefault(b => b.Email == email);
 
             return View(f);
+        }
+
+        public ActionResult cancel()
+        {
+            return View();
+        }
+        public ActionResult cancelticket()
+        {
+            var email = Request.Params["email"];
+            var f = ent.ConfirmBookings.FirstOrDefault(b => b.Email == email);
+            decimal cfare = f.Fare - 100;
+            CancelBooking cs = new CancelBooking()
+            {
+                BusId = f.BusId,
+                SeatNumber = f.SeatNumber,
+                Name = f.Name,
+                Email = f.Email,
+                Mobile= f.Mobile,
+                Age= f.Age, 
+                cutFare= cfare,
+                cancelTime = DateTime.Now
+
+            };
+            ent.CancelBookings.Add(cs);
+            ent.SaveChanges();  
+            ent.ConfirmBookings.Remove(f);
+            ent.SaveChanges();
+            Seat st = new Seat()
+            {
+
+                BusId = f.BusId,
+                SeatNumber = f.SeatNumber.ToString(),
+                IsBooked = false
+
+
+
+            };
+
+            ent.Seats.Add(st);
+            ent.SaveChanges();  
+            return RedirectToAction("Userdash");
         }
         public ActionResult About()
         {

@@ -53,6 +53,11 @@
     <div class="dashboard-container">
         <h2>Welcome, @ViewData["name"]</h2>
 
+        @Html.ActionLink("cancelticket", "cancel");
+        @Html.ActionLink("printticket", "message");
+
+
+
         <form method="post" action="/Home/SearchRedirect">
             <div class="form-group">
                 <label for="Mode">Select Mode:</label>
