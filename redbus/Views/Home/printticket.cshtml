@@ -44,7 +44,7 @@
     <div class="ticket-box">
         <div class="ticket-header">
             <h3 class="text-primary">Your Travel Ticket</h3>
-            <p>Thank you for booking with RedBus Clone</p>
+            <p>Thank you for booking with busbboking sites </p>
         </div>
 
         <div class="ticket-detail">
@@ -58,11 +58,11 @@
             <p><strong>Fare:</strong> ₹@Model.Fare</p>
             <p><strong>Boarding Point:</strong> @Model.boardingpoint</p>
             <p><strong>Pickup Point:</strong> @Model.pickuppoint</p>
-            <p><strong>Booking Time:</strong> @Model.BookingTime?.ToString("f")</p>
+            <p><strong>Booking Time:</strong> @Model.BookingTime</p>
         </div>
 
         <div class="text-center print-btn">
-            <button class="btn btn-success" onclick="window.print()">🖨️ Print Ticket</button>
+            <button class="btn btn-success" onclick="window.print()"> Print Ticket</button>
         </div>
     </div>
 </body>

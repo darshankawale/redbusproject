@@ -34,6 +34,28 @@
             .btn-seat:hover {
                 background-color: #005f86;
             }
+
+        .bus-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bus-details {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .bus-image {
+            width: 250px;
+        }
     </style>
 </head>
 <body>
@@ -49,12 +71,16 @@
                         @bus.BusName (@bus.BusType)
                     </div>
                     <div class="card-body">
-                        <p><strong>Departure:</strong> @bus.DepartureTime</p>
-                        <p><strong>Arrival:</strong> @bus.ArrivalTime</p>
-                        <p><strong>Total Seats:</strong> @bus.TotalSeats</p>
-                        <p><strong>Route:</strong> @Session["from"] to @Session["to"]</p>
-
-                        <a href="/Home/SelectSeat?busId=@bus.BusId" class="btn btn-seat">Select Seat</a>
+                        <div class="bus-details">
+                            <p><strong>Departure:</strong> @bus.DepartureTime</p>
+                            <p><strong>Arrival:</strong> @bus.ArrivalTime</p>
+                            <p><strong>Total Seats:</strong> @bus.TotalSeats</p>
+                            <p><strong>Route:</strong> @Session["from"] to @Session["to"]</p>
+                            <a href="/Home/SelectSeat?busId=@bus.BusId" class="btn btn-seat">Select Seat</a>
+                        </div>
+                        <div class="bus-image">
+                            <img src="@Url.Content(bus.filename)" alt="Bus Image" class="bus-img" />
+                        </div>
                     </div>
                 </div>
             }

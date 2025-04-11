@@ -31,5 +31,7 @@ namespace redbus
         public virtual DbSet<Seat> Seats { get; set; }
         public virtual DbSet<ConfirmBooking> ConfirmBookings { get; set; }
         public virtual DbSet<CancelBooking> CancelBookings { get; set; }
+        public virtual DbSet<BoardingPoint> BoardingPoints { get; set; }
+        public virtual DbSet<PickupPoint> PickupPoints { get; set; }
     }
 }

@@ -11,7 +11,9 @@ namespace redbus
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Web;
+
     public partial class Bus
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,9 +29,14 @@ namespace redbus
         public Nullable<System.DateTime> DepartureTime { get; set; }
         public Nullable<System.DateTime> ArrivalTime { get; set; }
         public string BusType { get; set; }
+        public string filename { get; set; }
     
         public virtual Route Route { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Seat> Seats { get; set; }
+
+        [NotMapped]
+
+        public HttpPostedFileBase FileBase { get; set; }    
     }
 }

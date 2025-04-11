@@ -13,6 +13,10 @@
         <AssociationConnector Association="RedbusModel1.FK__Seats__BusId__403A8C7D" />
         <EntityTypeShape EntityType="RedbusModel1.ConfirmBooking" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="RedbusModel1.CancelBooking" Width="1.5" PointX="3.25" PointY="4" />
+        <EntityTypeShape EntityType="RedbusModel1.BoardingPoint" Width="1.5" PointX="5.625" PointY="8.5" />
+        <EntityTypeShape EntityType="RedbusModel1.PickupPoint" Width="1.5" PointX="5.625" PointY="6" />
+        <AssociationConnector Association="RedbusModel1.FK__BoardingP__Route__49C3F6B7" />
+        <AssociationConnector Association="RedbusModel1.FK__PickupPoi__Route__4CA06362" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

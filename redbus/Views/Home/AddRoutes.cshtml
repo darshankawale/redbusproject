@@ -1,0 +1,178 @@
+﻿@model redbus.Route
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Route</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        #sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+            #sidebar a {
+                color: white;
+                text-decoration: none;
+                display: block;
+                padding: 15px 20px;
+            }
+
+                #sidebar a:hover {
+                    background-color: #495057;
+                }
+
+            #sidebar .nav-link.active {
+                background-color: #007bff;
+            }
+
+        #toggle-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background-color: #343a40;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .collapsed-sidebar {
+            display: none;
+        }
+
+        #content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h4 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toggle Button -->
+    <button id="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <a href="/Home/Admindash">Dashboard</a>
+        <a href="/Home/AddRoutes">Add Routes</a>
+        <a href="/Home/manageroutes">Manage Routes</a>
+        <a href="/Home/Addpickup">pickup and baording</a>
+
+        <a href="/Home/Addbuses">Add Buses</a>
+        <a href="/Home/managebuses">Manage Buses</a>
+        <a href="/Home/bookingdetails">Booking Details</a>
+        <a href="/Home/canceldetails">Cancel Details</a>
+        <a href="#">User Details</a>
+    </div>
+
+    <!-- Main Content -->
+    <div id="content">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <span class="navbar-brand">Admin Panel</span>
+                <div class="collapse navbar-collapse justify-content-end">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Add Route Form -->
+        <div class="form-container">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <h4>Add Route</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.FromLocation, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.FromLocation, new { @class = "form-control", placeholder = "Enter Source" })
+                    @Html.ValidationMessageFor(model => model.FromLocation, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.ToLocation, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.ToLocation, new { @class = "form-control", placeholder = "Enter Destination" })
+                    @Html.ValidationMessageFor(model => model.ToLocation, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Mode, htmlAttributes: new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Mode, new SelectList(new[] { "Bus", "Train", "Flight" }), "-- Select Mode --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Mode, "", new { @class = "text-danger" })
+                </div>
+
+               
+
+                <button type="submit" class="btn btn-primary">Create</button>
+            }
+
+            <div class="back-link">
+                @Html.ActionLink("← Back to List", "Index", null, new { @class = "text-decoration-none" })
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("collapsed-sidebar");
+        }
+    </script>

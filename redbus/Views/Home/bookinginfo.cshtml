@@ -1,5 +1,4 @@
 ﻿@model List<redbus.ConfirmBooking>
-
 @{
     Layout = null;
 
@@ -15,7 +14,37 @@
 <head>
     <meta charset="utf-8" />
     <title>Confirm Booking</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background-color: #e0f7fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background-color: #0077b6;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .btn-success {
+            background-color: #0077b6;
+            border-color: #0077b6;
+        }
+
+            .btn-success:hover {
+                background-color: #005f86;
+                border-color: #005f86;
+            }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
@@ -25,16 +54,18 @@
             @for (int i = 0; i < Model.Count; i++)
             {
                 <div class="card mb-4 shadow-sm">
-                    <div class="card-header bg-info text-white">
+                    <div class="card-header">
                         Passenger for Seat No. @Model[i].SeatNumber
                     </div>
                     <div class="card-body">
+                        <!-- Hidden Fields -->
                         <input type="hidden" name="Bookings[@i].SeatNumber" value="@Model[i].SeatNumber" />
                         <input type="hidden" name="Bookings[@i].BusId" value="@busId" />
                         <input type="hidden" name="Bookings[@i].Fare" value="@fare" />
                         <input type="hidden" name="Bookings[@i].boardingpoint" value="@board" />
                         <input type="hidden" name="Bookings[@i].pickuppoint" value="@pickup" />
 
+                        <!-- Passenger Information -->
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" name="Bookings[@i].Name" class="form-control" required />
@@ -60,5 +91,8 @@
             </div>
         </form>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

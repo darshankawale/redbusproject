@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RedbusModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BoardingPoints">
+          <Key>
+            <PropertyRef Name="PointId" />
+          </Key>
+          <Property Name="PointId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PointName" Type="nvarchar" MaxLength="100" />
+          <Property Name="RouteId" Type="int" />
+        </EntityType>
         <EntityType Name="Buses">
           <Key>
             <PropertyRef Name="BusId" />
@@ -16,6 +24,7 @@
           <Property Name="DepartureTime" Type="datetime" />
           <Property Name="ArrivalTime" Type="datetime" />
           <Property Name="BusType" Type="nvarchar" MaxLength="50" />
+          <Property Name="filename" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="CancelBooking">
           <Key>
@@ -47,6 +56,14 @@
           <Property Name="boardingpoint" Type="varchar" MaxLength="50" />
           <Property Name="pickuppoint" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="PickupPoints">
+          <Key>
+            <PropertyRef Name="PointId" />
+          </Key>
+          <Property Name="PointId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PointName" Type="nvarchar" MaxLength="100" />
+          <Property Name="RouteId" Type="int" />
+        </EntityType>
         <EntityType Name="Routes">
           <Key>
             <PropertyRef Name="RouteId" />
@@ -55,7 +72,6 @@
           <Property Name="FromLocation" Type="nvarchar" MaxLength="100" />
           <Property Name="ToLocation" Type="nvarchar" MaxLength="100" />
           <Property Name="Mode" Type="nvarchar" MaxLength="50" />
-          <Property Name="TravelDate" Type="date" />
         </EntityType>
         <EntityType Name="Seats">
           <Key>
@@ -77,6 +93,18 @@
           <Property Name="Phone" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="IsDisabled" Type="nvarchar" MaxLength="5" Nullable="false" />
         </EntityType>
+        <Association Name="FK__BoardingP__Route__49C3F6B7">
+          <End Role="Routes" Type="Self.Routes" Multiplicity="0..1" />
+          <End Role="BoardingPoints" Type="Self.BoardingPoints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="BoardingPoints">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Buses__RouteId__3D5E1FD2">
           <End Role="Routes" Type="Self.Routes" Multiplicity="0..1" />
           <End Role="Buses" Type="Self.Buses" Multiplicity="*" />
@@ -85,6 +113,18 @@
               <PropertyRef Name="RouteId" />
             </Principal>
             <Dependent Role="Buses">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PickupPoi__Route__4CA06362">
+          <End Role="Routes" Type="Self.Routes" Multiplicity="0..1" />
+          <End Role="PickupPoints" Type="Self.PickupPoints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="PickupPoints">
               <PropertyRef Name="RouteId" />
             </Dependent>
           </ReferentialConstraint>
@@ -102,15 +142,25 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="RedbusModel1StoreContainer">
+          <EntitySet Name="BoardingPoints" EntityType="Self.BoardingPoints" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Buses" EntityType="Self.Buses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CancelBooking" EntityType="Self.CancelBooking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConfirmBooking" EntityType="Self.ConfirmBooking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PickupPoints" EntityType="Self.PickupPoints" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Routes" EntityType="Self.Routes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seats" EntityType="Self.Seats" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BoardingP__Route__49C3F6B7" Association="Self.FK__BoardingP__Route__49C3F6B7">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="BoardingPoints" EntitySet="BoardingPoints" />
+          </AssociationSet>
           <AssociationSet Name="FK__Buses__RouteId__3D5E1FD2" Association="Self.FK__Buses__RouteId__3D5E1FD2">
             <End Role="Routes" EntitySet="Routes" />
             <End Role="Buses" EntitySet="Buses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PickupPoi__Route__4CA06362" Association="Self.FK__PickupPoi__Route__4CA06362">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="PickupPoints" EntitySet="PickupPoints" />
           </AssociationSet>
           <AssociationSet Name="FK__Seats__BusId__403A8C7D" Association="Self.FK__Seats__BusId__403A8C7D">
             <End Role="Buses" EntitySet="Buses" />
@@ -147,6 +197,16 @@
           </AssociationSet>
           <EntitySet Name="ConfirmBookings" EntityType="RedbusModel1.ConfirmBooking" />
           <EntitySet Name="CancelBookings" EntityType="RedbusModel1.CancelBooking" />
+          <EntitySet Name="BoardingPoints" EntityType="RedbusModel1.BoardingPoint" />
+          <EntitySet Name="PickupPoints" EntityType="RedbusModel1.PickupPoint" />
+          <AssociationSet Name="FK__BoardingP__Route__49C3F6B7" Association="RedbusModel1.FK__BoardingP__Route__49C3F6B7">
+            <End Role="Route" EntitySet="Routes" />
+            <End Role="BoardingPoint" EntitySet="BoardingPoints" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PickupPoi__Route__4CA06362" Association="RedbusModel1.FK__PickupPoi__Route__4CA06362">
+            <End Role="Route" EntitySet="Routes" />
+            <End Role="PickupPoint" EntitySet="PickupPoints" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Bus">
           <Key>
@@ -161,6 +221,7 @@
           <Property Name="DepartureTime" Type="DateTime" Precision="3" />
           <Property Name="ArrivalTime" Type="DateTime" Precision="3" />
           <Property Name="BusType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="filename" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -171,7 +232,8 @@
           <Property Name="ToLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Buses" Relationship="RedbusModel1.FK__Buses__RouteId__3D5E1FD2" FromRole="Route" ToRole="Bus" />
           <Property Name="Mode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TravelDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="BoardingPoints" Relationship="RedbusModel1.FK__BoardingP__Route__49C3F6B7" FromRole="Route" ToRole="BoardingPoint" />
+          <NavigationProperty Name="PickupPoints" Relationship="RedbusModel1.FK__PickupPoi__Route__4CA06362" FromRole="Route" ToRole="PickupPoint" />
         </EntityType>
         <EntityType Name="Seat">
           <Key>
@@ -237,6 +299,48 @@
           <Property Name="cutFare" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="cancelTime" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="BoardingPoint">
+          <Key>
+            <PropertyRef Name="PointId" />
+          </Key>
+          <Property Name="PointId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PointName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RouteId" Type="Int32" />
+          <NavigationProperty Name="Route" Relationship="RedbusModel1.FK__BoardingP__Route__49C3F6B7" FromRole="BoardingPoint" ToRole="Route" />
+        </EntityType>
+        <EntityType Name="PickupPoint">
+          <Key>
+            <PropertyRef Name="PointId" />
+          </Key>
+          <Property Name="PointId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PointName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RouteId" Type="Int32" />
+          <NavigationProperty Name="Route" Relationship="RedbusModel1.FK__PickupPoi__Route__4CA06362" FromRole="PickupPoint" ToRole="Route" />
+        </EntityType>
+        <Association Name="FK__BoardingP__Route__49C3F6B7">
+          <End Type="RedbusModel1.Route" Role="Route" Multiplicity="0..1" />
+          <End Type="RedbusModel1.BoardingPoint" Role="BoardingPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="BoardingPoint">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PickupPoi__Route__4CA06362">
+          <End Type="RedbusModel1.Route" Role="Route" Multiplicity="0..1" />
+          <End Type="RedbusModel1.PickupPoint" Role="PickupPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="PickupPoint">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -258,6 +362,7 @@
           <EntitySetMapping Name="Buses">
             <EntityTypeMapping TypeName="RedbusModel1.Bus">
               <MappingFragment StoreEntitySet="Buses">
+                <ScalarProperty Name="filename" ColumnName="filename" />
                 <ScalarProperty Name="BusType" ColumnName="BusType" />
                 <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
                 <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
@@ -271,7 +376,6 @@
           <EntitySetMapping Name="Routes">
             <EntityTypeMapping TypeName="RedbusModel1.Route">
               <MappingFragment StoreEntitySet="Routes">
-                <ScalarProperty Name="TravelDate" ColumnName="TravelDate" />
                 <ScalarProperty Name="Mode" ColumnName="Mode" />
                 <ScalarProperty Name="ToLocation" ColumnName="ToLocation" />
                 <ScalarProperty Name="FromLocation" ColumnName="FromLocation" />
@@ -318,6 +422,24 @@
                 <ScalarProperty Name="SeatNumber" ColumnName="SeatNumber" />
                 <ScalarProperty Name="BusId" ColumnName="BusId" />
                 <ScalarProperty Name="cancelId" ColumnName="cancelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BoardingPoints">
+            <EntityTypeMapping TypeName="RedbusModel1.BoardingPoint">
+              <MappingFragment StoreEntitySet="BoardingPoints">
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="PointName" ColumnName="PointName" />
+                <ScalarProperty Name="PointId" ColumnName="PointId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PickupPoints">
+            <EntityTypeMapping TypeName="RedbusModel1.PickupPoint">
+              <MappingFragment StoreEntitySet="PickupPoints">
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="PointName" ColumnName="PointName" />
+                <ScalarProperty Name="PointId" ColumnName="PointId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

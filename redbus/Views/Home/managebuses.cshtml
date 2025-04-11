@@ -1,0 +1,145 @@
+﻿@model IEnumerable<redbus.Bus>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Manage Buses</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+            #sidebar a {
+                color: white;
+                text-decoration: none;
+                display: block;
+                padding: 15px 20px;
+            }
+
+                #sidebar a:hover {
+                    background-color: #495057;
+                }
+
+            #sidebar .nav-link.active {
+                background-color: #007bff;
+            }
+
+        #content {
+            flex: 1;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        #toggle-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background-color: #343a40;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .collapsed-sidebar {
+            display: none;
+        }
+
+        .img-thumbnail {
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Toggle Sidebar Button -->
+    <button id="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <a href="/Home/Admindash">Dashboard</a>
+ <a href="/Home/AddRoutes">Add Routes</a>
+ <a href="/Home/manageroutes">Manage Routes</a>
+ <a href="/Home/Addpickup">pickup and baording</a>
+
+ <a href="/Home/Addbuses">Add Buses</a>
+ <a href="/Home/managebuses">Manage Buses</a>
+ <a href="/Home/bookingdetails">Booking Details</a>
+ <a href="/Home/canceldetails">Cancel Details</a>
+ <a href="#">User Details</a>
+    </div>
+
+    <!-- Content -->
+    <div id="content">
+        <div class="container">
+            <h3 class="text-center mb-4">Manage Buses</h3>
+
+            <p>
+                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success mb-3" })
+            </p>
+
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().BusName)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TotalSeats)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().DepartureTime)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ArrivalTime)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().BusType)</th>
+                        <th>Bus Image</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Route.FromLocation)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.BusName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.TotalSeats)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DepartureTime)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ArrivalTime)</td>
+                            <td>@Html.DisplayFor(modelItem => item.BusType)</td>
+                            <td>
+                                <img src="@item.filename" alt="Bus Image" class="img-thumbnail" />
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Route.FromLocation)</td>
+                            <td>
+                                @Html.ActionLink("Edit", "Editbuses", new { id = item.BusId }, new { @class = "btn btn-sm btn-warning me-1" }) |
+                                @Html.ActionLink("Delete", "Deletebuses", new { id = item.BusId }, new { @class = "btn btn-sm btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("collapsed-sidebar");
+        }
+    </script>
+</body>
+</html>

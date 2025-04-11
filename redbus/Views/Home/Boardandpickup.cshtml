@@ -1,28 +1,75 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Boardandpickup</title>
+    <title>Boarding and Pickup Points</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #e0f7fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .card-header {
+            background-color: #0077b6;
+            color: white;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .btn-submit {
+            background-color: #0077b6;
+            color: white;
+        }
+
+            .btn-submit:hover {
+                background-color: #005f86;
+            }
+    </style>
 </head>
 <body>
-    <div> 
-        <h2>enter  your Boarding and pickup point</h2>
-        <form action="~/Home/bookinginfo" method="post">
-            <label>enter boarding point </label>
-            <input type="text" name="board" class="Form-Control" />
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">Enter Your Boarding and Pickup Points</h2>
+            </div>
+            <div class="card-body">
+                <form action="~/Home/bookinginfo" method="post">
+                    <div class="form-group">
+                        <label class="form-label">Enter Boarding Point</label>
+                        @Html.DropDownList("BoardingPointId", ViewData["bbs"] as SelectList, "-- Select Boarding Point --", new { @class = "form-control" })
+                    </div>
 
-            <label>enter pickup point  </label>
-            <input type="text" name="pickup" class="Form-Control" />
+                    <div class="form-group">
+                        <label class="form-label">Enter Pickup Point</label>
+                        @Html.DropDownList("PickupPointId", ViewData["pps"] as SelectList, "-- Select Pickup Point --", new { @class = "form-control" })
+                    </div>
 
-            <button type="submit">submit</button>
-        </form>
-
+                    <button type="submit" class="btn btn-submit btn-block mt-3">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

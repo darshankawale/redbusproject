@@ -1,24 +1,72 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>message</title>
+    <title>Message</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #e0f7fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        .card-header {
+            background-color: #0077b6;
+            color: white;
+            border-radius: 15px 15px 0 0;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .btn-submit {
+            background-color: #0077b6;
+            border-color: #0077b6;
+            color: white;
+        }
+
+            .btn-submit:hover {
+                background-color: #005f86;
+                border-color: #005f86;
+            }
+    </style>
 </head>
 <body>
-    <div> 
-        <h2> to print the ticket enter your email</h2>
-        <form action="~/Home/printticket" method="post">
-            <label>entr email</label>
-            <input type="email" name="email"/>
-            
-            <button type="submit">submit</button>
-        </form>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Print Ticket</h2>
+            </div>
+            <div class="card-body">
+                <h5 class="mb-4">To print the ticket, enter your email</h5>
+                <form action="~/Home/printticket" method="post">
+                    <div class="form-group">
+                        <label for="email">Enter Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-submit btn-block">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

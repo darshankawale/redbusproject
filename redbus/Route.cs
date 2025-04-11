@@ -18,15 +18,20 @@ namespace redbus
         public Route()
         {
             this.Buses = new HashSet<Bus>();
+            this.BoardingPoints = new HashSet<BoardingPoint>();
+            this.PickupPoints = new HashSet<PickupPoint>();
         }
     
         public int RouteId { get; set; }
         public string FromLocation { get; set; }
         public string ToLocation { get; set; }
         public string Mode { get; set; }
-        public Nullable<System.DateTime> TravelDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bus> Buses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BoardingPoint> BoardingPoints { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PickupPoint> PickupPoints { get; set; }
     }
 }
